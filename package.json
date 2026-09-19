@@ -1,0 +1,10 @@
+{
+  "name": "nftci-revamp",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Responsive website for the National Federation of Tourism & Transport Co-operatives of India Ltd",
+  "scripts": {
+    "serve": "python3 -m http.server 8080",
+    "check": "node --check assets/js/site.js"
+  }
+}
