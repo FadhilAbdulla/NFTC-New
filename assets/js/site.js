@@ -50,10 +50,13 @@
       var current = item.href === page ? ' aria-current="page"' : '';
       return '<a class="nav-link' + active + '" href="' + item.href + '"' + current + '>' + item.label + '</a>';
     }).join('');
-    var mobile = NAV.map(function (item) {
+    var mobile = NAV.map(function (item, index) {
       var active = item.href === page ? ' is-active' : '';
       var current = item.href === page ? ' aria-current="page"' : '';
-      return '<a class="drawer-link' + active + '" href="' + item.href + '"' + current + '><span>' + item.label + '</span>' + icon('arrow', 17) + '</a>';
+      var number = String(index + 1).padStart(2, '0');
+      return '<a class="drawer-link' + active + '" href="' + item.href + '"' + current + '>' +
+        '<span class="drawer-link__main"><span class="drawer-link__index">' + number + '</span><span class="drawer-link__label">' + item.label + '</span></span>' +
+        '<span class="drawer-link__arrow">' + icon('arrow', 16) + '</span></a>';
     }).join('');
 
     host.innerHTML = '<div class="tricolor" aria-hidden="true"></div>' +
@@ -65,14 +68,15 @@
       '<a href="index.html" aria-label="NFTCI home">' + brand() + '</a>' +
       '<nav class="desktop-nav" aria-label="Primary navigation">' + desktop + '</nav>' +
       '<div class="header-actions"><a class="btn btn-primary" href="memberships.html">Join NFTCI ' + icon('arrow', 17) + '</a>' +
-      '<button class="menu-toggle" id="menuToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileDrawer"><span></span></button></div>' +
+      '<button class="menu-toggle" id="menuToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileDrawer">' +
+      '<span class="menu-toggle__label">Menu</span><span class="menu-toggle__icon" aria-hidden="true"><i></i><i></i></span></button></div>' +
       '</div></header>' +
       '<div class="mobile-drawer" id="mobileDrawer" aria-hidden="true"><div class="drawer-scrim" data-menu-close></div>' +
       '<div class="drawer-panel" role="dialog" aria-modal="true" aria-label="Site navigation"><div class="drawer-head">' + brand() +
       '<button class="drawer-close" type="button" data-menu-close aria-label="Close menu">' + icon('close', 22) + '</button></div>' +
-      '<nav class="drawer-nav" aria-label="Mobile navigation">' + mobile + '</nav>' +
-      '<a class="btn btn-primary" href="memberships.html" style="width:100%">Become a member ' + icon('arrow', 17) + '</a>' +
-      '<div class="drawer-contact"><strong>Federation office</strong><p style="margin:8px 0 12px">' + SITE.address + '</p><a href="mailto:' + SITE.email + '">' + SITE.email + '</a></div>' +
+      '<p class="drawer-kicker">Explore NFTCI</p><nav class="drawer-nav" aria-label="Mobile navigation">' + mobile + '</nav>' +
+      '<a class="btn btn-primary drawer-cta" href="memberships.html">Become a member ' + icon('arrow', 17) + '</a>' +
+      '<div class="drawer-contact"><span class="drawer-contact__label">Need assistance?</span><a href="mailto:' + SITE.email + '">' + SITE.email + '</a><p>Federation office · Sector 80, Noida</p></div>' +
       '</div></div>';
   }
 
