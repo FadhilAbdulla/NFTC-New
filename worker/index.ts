@@ -6,13 +6,14 @@
  *   - everything else → static files from out/ via the ASSETS binding
  *
  * POST /api/enquiry → validates the form and emails it to ENQUIRY_TO via Resend (https://resend.com).
- * Returns 503 when RESEND_API_KEY is not configured, so the browser falls back to opening the visitor's email app.
+ * ENQUIRY_TO and RESEND_API_KEY are Worker secrets, so the receiving inbox never appears in the code or the site.
+ * Returns 503 when either is not configured, so the browser falls back to opening the visitor's email app.
  */
 
 interface Env {
   ASSETS: Fetcher;
   RESEND_API_KEY?: string;
-  ENQUIRY_TO: string;
+  ENQUIRY_TO?: string;
   ENQUIRY_FROM: string;
   ENQUIRY_LIMITER?: { limit(options: { key: string }): Promise<{ success: boolean }> };
 }
@@ -81,7 +82,8 @@ async function handleEnquiry(request: Request, env: Env): Promise<Response> {
   if (missing.length) return json({ error: `Please fill in: ${missing.map((key) => LABELS[key]).join(", ")}.` }, 400);
   if (!EMAIL.test(fields.email)) return json({ error: "Please enter a valid email address." }, 400);
 
-  if (!env.RESEND_API_KEY) return json({ error: "Email delivery is not configured" }, 503);
+  const recipients = (env.ENQUIRY_TO ?? "").split(",").map((address) => address.trim()).filter(Boolean);
+  if (!env.RESEND_API_KEY || recipients.length === 0) return json({ error: "Email delivery is not configured" }, 503);
 
   const subject = `${kind === "membership" ? "Membership enquiry" : "Website enquiry"}: ${fields.organisation ?? fields.name}`.replace(/[\r\n]+/g, " ");
   const text = [
@@ -95,7 +97,7 @@ async function handleEnquiry(request: Request, env: Env): Promise<Response> {
   const response = await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, "Content-Type": "application/json" },
-    body: JSON.stringify({ from: env.ENQUIRY_FROM, to: [env.ENQUIRY_TO], reply_to: fields.email, subject, text }),
+    body: JSON.stringify({ from: env.ENQUIRY_FROM, to: recipients, reply_to: fields.email, subject, text }),
   });
   if (!response.ok) {
     console.error("Resend error", response.status, await response.text());

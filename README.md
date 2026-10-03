@@ -41,15 +41,16 @@ npm run typecheck
 
 ## Enquiry forms
 
-Forms post to `/api/enquiry`. The Worker validates the submission (required fields, email format, honeypot, origin check, 5 per minute per IP) and emails it to `info@nftcindia.in` through [Resend](https://resend.com), with Reply-To set to the visitor. If email delivery is not configured or fails, the browser opens the visitor's email app with the message pre-filled, so no enquiry is silently lost.
+Forms post to `/api/enquiry`. The Worker validates the submission (required fields, email format, honeypot, origin check, 5 per minute per IP) and emails it through [Resend](https://resend.com) to the inbox set in the `ENQUIRY_TO` secret, with Reply-To set to the visitor. If email delivery is not configured or fails, the browser opens the visitor's email app with the message pre-filled, so no enquiry is silently lost.
 
-Settings live in `wrangler.jsonc` (`ENQUIRY_TO`, `ENQUIRY_FROM`). The API key is a secret:
+The sender (`ENQUIRY_FROM`) is in `wrangler.jsonc`. The recipient and API key are Worker secrets, so they never appear in the repo or on the site:
 
 ```bash
 npx wrangler secret put RESEND_API_KEY
+npx wrangler secret put ENQUIRY_TO     # one address, or several separated by commas
 ```
 
-For local testing with real email, put `RESEND_API_KEY=...` in `.dev.vars` (git-ignored) and run `npm run preview`.
+For local testing with real email, put `RESEND_API_KEY=...` and `ENQUIRY_TO=...` in `.dev.vars` (git-ignored) and run `npm run preview`.
 
 ## Deploying to Cloudflare
 
@@ -60,7 +61,7 @@ For local testing with real email, put `RESEND_API_KEY=...` in `.dev.vars` (git-
    - `TXT "v=spf1 include:secureserver.net -all"` (extend it with `include:amazonses.com` only if Resend asks for it on the root domain; Resend normally uses the `send.` subdomain)
    - `TXT "T1565391"`
    Then switch the nameservers from `ns1/ns2.bluehost.com` to the two Cloudflare gives you. Send a test email to info@nftcindia.in afterwards.
-2. **Set up Resend.** Create an account, add the domain `nftcindia.in`, and add the DNS records it shows (they go on the `send.nftcindia.in` subdomain and `resend._domainkey`). Create an API key and run `npx wrangler secret put RESEND_API_KEY`.
+2. **Set up Resend.** Create an account, add the domain `nftcindia.in`, and add the DNS records it shows (they go on the `send.nftcindia.in` subdomain and `resend._domainkey`). Create an API key and run `npx wrangler secret put RESEND_API_KEY` and `npx wrangler secret put ENQUIRY_TO`.
 3. **Deploy:** `npx wrangler login`, then `npm run deploy`.
 4. **Attach the domain.** In the Cloudflare dashboard → Workers & Pages → `nftc-new` → Settings → Domains & Routes, add custom domains `nftcindia.in` and `www.nftcindia.in`.
 5. **Redirect www to the bare domain.** Rules → Redirect Rules → template "Redirect from WWW to root" (301, preserve path and query).
