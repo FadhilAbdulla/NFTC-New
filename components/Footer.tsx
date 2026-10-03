@@ -54,7 +54,10 @@ export function Footer({ nav }: { nav: NavItem[] }) {
             © {new Date().getFullYear()} {site.legalName}.
           </p>
           <p>
-            <Link href="/privacy">Privacy notice</Link> · <a href={site.bylawsPdf}>By-laws (PDF)</a> · Created by Najaf
+            <Link href="/privacy">Privacy notice</Link> · <a href={site.bylawsPdf}>By-laws (PDF)</a> · Created and managed by{" "}
+            <a href="https://pyalm.com" target="_blank" rel="noopener">
+              Pyalm Labs
+            </a>
           </p>
         </div>
       </div>
