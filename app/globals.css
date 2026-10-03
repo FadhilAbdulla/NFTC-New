@@ -114,6 +114,7 @@ p { margin-bottom: 1rem; }
 .topbar { color: #dceaf4; background: var(--ink-strong); font-size: .78rem; }
 .topbar__inner { min-height: 36px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
 .topbar__item { display: inline-flex; align-items: center; gap: 8px; }
+.topbar__group { display: inline-flex; align-items: center; gap: 24px; }
 .topbar__item svg { flex: 0 0 auto; color: #f5a046; }
 .site-header {
   position: sticky;

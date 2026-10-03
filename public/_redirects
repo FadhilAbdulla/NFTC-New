@@ -1,0 +1,43 @@
+# Permanent redirects from the old static site (ntfc_final/) so its search rankings and backlinks carry over.
+# Pages that still exist (about, contact, gallery, services) are covered by html_handling in wrangler.jsonc.
+
+/index.html                      /                         301
+/NFTC-bylaws.html                /about#bylaws             301
+/core-principles.html            /about#principles         301
+/core-members.html               /about#governance         301
+/leadership-team.html            /about#governance         301
+/team.html                       /about#governance         301
+/hf.html                         /about                    301
+
+/transportation-domain.html      /services#transport       301
+/tourism-domain.html             /services#tourism         301
+/travel-domain.html              /services#tourism         301
+/agri-tourism.html               /services#tourism         301
+/logistics.html                  /services#logistics       301
+/Logistics.html                  /services#logistics       301
+/hospitality.html                /services#hospitality     301
+/hospitality-domain.html         /services#hospitality     301
+/trade.html                      /services#trade           301
+/Trade.html                      /services#trade           301
+/agri-trade.html                 /services#trade           301
+/IT-infra-and-services.html      /services#horizontal      301
+/horizontal-services.html        /services#horizontal      301
+/channel-partners.html           /services#partnerships    301
+
+/projects.html                   /programmes               301
+/completed-work.html             /programmes               301
+/in-progress-work.html           /programmes               301
+/proposals.html                  /programmes               301
+/spiritual-tourism.html          /programmes#pilgrimage    301
+
+/memberships.html                /membership               301
+/memberships-1.html              /membership               301
+/memberships-2.html              /membership               301
+/benefits.html                   /membership               301
+/why-to-become-a-member.html     /membership               301
+/join.html                       /membership               301
+
+/data-governance-and-privacy.html  /privacy                301
+/security.html                   /privacy                  301
+
+/assets/img/Official-Document-1.pdf  /docs/nftci-bylaws.pdf  301

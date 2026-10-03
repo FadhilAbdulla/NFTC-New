@@ -30,8 +30,10 @@ export default function ContactPage() {
             <div className="icon-box">
               <Glyph d="M3 5h18v14H3zM3 7l9 6 9-6" />
             </div>
-            <h2 className="h3-size">Email the federation</h2>
+            <h2 className="h3-size">Call or email</h2>
             <p>For general, membership and partnership enquiries.</p>
+            <a href={`tel:${site.phone.tel}`}>{site.phone.display}</a>
+            <br />
             <a href={`mailto:${site.email}`}>{site.email}</a>
           </article>
           <article className="card contact-card reveal">

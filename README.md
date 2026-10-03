@@ -77,7 +77,6 @@ For local testing with real email, put `RESEND_API_KEY=...` in `.dev.vars` (git-
 
 ## Content safeguards
 
-- No phone number is published until NFTCI provides a verified one.
 - Unverified statistics, testimonials and team names from the old site were not carried over.
 - Membership fee amounts are not published; the site states that fees are emailed after an Expression of Interest is reviewed, as the old site's category pages did.
 - Programme pages describe capability and focus areas, not unverified completed projects.
