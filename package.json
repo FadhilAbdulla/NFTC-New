@@ -8,8 +8,8 @@
     "build": "next build && node scripts/postbuild.mjs",
     "typecheck": "tsc --noEmit && tsc --noEmit -p worker",
     "images": "python3 scripts/optimize-images.py",
-    "preview": "npm run build && wrangler dev",
-    "deploy": "npm run build && wrangler deploy"
+    "preview": "wrangler dev",
+    "deploy": "wrangler deploy"
   },
   "dependencies": {
     "gray-matter": "^4.0.3",
@@ -26,5 +26,8 @@
     "@types/react-dom": "^19.3.0",
     "typescript": "^7.0.2",
     "wrangler": "^4.147.0"
+  },
+  "engines": {
+    "node": ">=20.9"
   }
 }

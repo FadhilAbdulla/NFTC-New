@@ -9,7 +9,7 @@ Next.js (App Router, TypeScript) exported as static HTML and served by a Cloudfl
 ```bash
 npm install
 npm run dev          # http://localhost:3000 (forms fall back to the visitor's email app)
-npm run preview      # production build served by Cloudflare's runtime at http://localhost:8787
+npm run preview      # builds, then serves it with Cloudflare's runtime at http://localhost:8787
 npm run typecheck
 ```
 
@@ -62,9 +62,11 @@ For local testing with real email, put `RESEND_API_KEY=...` in `.dev.vars` (git-
    Then switch the nameservers from `ns1/ns2.bluehost.com` to the two Cloudflare gives you. Send a test email to info@nftcindia.in afterwards.
 2. **Set up Resend.** Create an account, add the domain `nftcindia.in`, and add the DNS records it shows (they go on the `send.nftcindia.in` subdomain and `resend._domainkey`). Create an API key and run `npx wrangler secret put RESEND_API_KEY`.
 3. **Deploy:** `npx wrangler login`, then `npm run deploy`.
-4. **Attach the domain.** In the Cloudflare dashboard → Workers & Pages → `nftc-india` → Settings → Domains & Routes, add custom domains `nftcindia.in` and `www.nftcindia.in`.
+4. **Attach the domain.** In the Cloudflare dashboard → Workers & Pages → `nftc-new` → Settings → Domains & Routes, add custom domains `nftcindia.in` and `www.nftcindia.in`.
 5. **Redirect www to the bare domain.** Rules → Redirect Rules → template "Redirect from WWW to root" (301, preserve path and query).
-6. **Auto-deploy from GitHub (recommended).** Workers & Pages → `nftc-india` → Settings → Builds → connect the GitHub repo, build command `npm run build`, deploy command `npx wrangler deploy`. Every push to `main` then deploys, and other branches get preview URLs.
+6. **Auto-deploy from GitHub (recommended).** Workers & Pages → `nftc-new` → Settings → Builds → connect the GitHub repo with deploy command `npx wrangler deploy` (no build command needed: `wrangler.jsonc` runs `npm run build` itself). Node 22 comes from `.node-version`. Every push to `main` then deploys, and other branches get preview URLs.
+
+   The Worker name in the dashboard must match `name` in `wrangler.jsonc` (`nftc-new`).
 
 ### After the first deploy
 
