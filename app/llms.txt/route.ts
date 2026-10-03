@@ -28,7 +28,6 @@ export function GET() {
 - Membership is approved by the Managing Director's Office under the by-laws; fees are communicated by email only after an Expression of Interest is reviewed. Membership is not an investment and carries no assured returns.
 - Office: ${site.address.lines.join(", ")}
 - Email: ${site.email}
-- Phone: ${site.phone.display}
 
 ## Pages
 

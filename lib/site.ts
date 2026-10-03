@@ -8,7 +8,6 @@ export const site = {
   legalName: "National Federation of Tourism & Transport Co-operatives of India Ltd",
   tagline: "India’s apex cooperative platform for tourism, transport and allied services",
   email: "info@nftcindia.in",
-  phone: { display: "+91 98950 44424", tel: "+919895044424" },
   locale: "en_IN",
   ogImage: { url: "/images/og-cover.jpg", width: 1200, height: 630, alt: "NFTCI — cooperative tourism and transport across India" },
   bylawsPdf: "/docs/nftci-bylaws.pdf",

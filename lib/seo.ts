@@ -54,12 +54,10 @@ export const organizationJsonLd = {
   logo: { "@type": "ImageObject", url: `${site.url}/images/nftci-logo.webp` },
   image: absoluteUrl(site.ogImage.url),
   email: site.email,
-  telephone: site.phone.tel,
   contactPoint: {
     "@type": "ContactPoint",
     contactType: "customer support",
     email: site.email,
-    telephone: site.phone.tel,
     areaServed: "IN",
     availableLanguage: ["English", "Hindi"],
   },

@@ -52,16 +52,10 @@ export function Header({ nav }: { nav: NavItem[] }) {
             <Icon name="pin" size={15} />
             <span>{site.address.short}</span>
           </span>
-          <span className="topbar__group">
-            <a className="topbar__item" href={`tel:${site.phone.tel}`}>
-              <Icon name="phone" size={15} />
-              <span>{site.phone.display}</span>
-            </a>
-            <a className="topbar__item" href={`mailto:${site.email}`}>
-              <Icon name="mail" size={15} />
-              <span>{site.email}</span>
-            </a>
-          </span>
+          <a className="topbar__item" href={`mailto:${site.email}`}>
+            <Icon name="mail" size={15} />
+            <span>{site.email}</span>
+          </a>
         </div>
       </div>
       <header className={`site-header${scrolled ? " is-scrolled" : ""}`}>
@@ -118,8 +112,6 @@ export function Header({ nav }: { nav: NavItem[] }) {
           </Link>
           <div className="drawer-contact">
             <span className="drawer-contact__label">Need assistance?</span>
-            <a href={`tel:${site.phone.tel}`}>{site.phone.display}</a>
-            <br />
             <a href={`mailto:${site.email}`}>{site.email}</a>
             <p>Federation office · Sector 80, Noida</p>
           </div>

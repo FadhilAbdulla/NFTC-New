@@ -41,10 +41,6 @@ export function Footer({ nav }: { nav: NavItem[] }) {
                 <span>{site.address.lines.join(", ")}, India</span>
               </div>
               <div>
-                <Icon name="phone" size={18} />
-                <a href={`tel:${site.phone.tel}`}>{site.phone.display}</a>
-              </div>
-              <div>
                 <Icon name="mail" size={18} />
                 <a href={`mailto:${site.email}`}>{site.email}</a>
               </div>
