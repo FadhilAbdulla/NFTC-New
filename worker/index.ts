@@ -1,6 +1,9 @@
 /**
  * Cloudflare Worker for nftcindia.in.
- * Static pages are served from out/ by the assets binding; this script only runs for /api/* (see wrangler.jsonc).
+ * Every request runs this script first (see wrangler.jsonc):
+ *   - http:// and www.nftcindia.in → 301 to https://nftcindia.in (same path and query)
+ *   - /api/* → handled here
+ *   - everything else → static files from out/ via the ASSETS binding
  *
  * POST /api/enquiry → validates the form and emails it to ENQUIRY_TO via Resend (https://resend.com).
  * Returns 503 when RESEND_API_KEY is not configured, so the browser falls back to opening the visitor's email app.
@@ -14,7 +17,11 @@ interface Env {
   ENQUIRY_LIMITER?: { limit(options: { key: string }): Promise<{ success: boolean }> };
 }
 
+const CANONICAL_HOST = "nftcindia.in";
 const ALLOWED_ORIGINS = ["https://nftcindia.in", "https://www.nftcindia.in"];
+// Old-site URLs whose page still exists: a permanent 301 instead of the assets layer's 307.
+// Every other old URL falls through to ASSETS, which applies public/_redirects.
+const LEGACY_PAGES = new Set(["/about.html", "/contact.html", "/gallery.html", "/services.html"]);
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const LABELS: Record<string, string> = {
   name: "Name",
@@ -100,8 +107,16 @@ async function handleEnquiry(request: Request, env: Env): Promise<Response> {
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url);
+    const isProductionHost = url.hostname === CANONICAL_HOST || url.hostname === `www.${CANONICAL_HOST}`;
+    if (isProductionHost && (url.hostname !== CANONICAL_HOST || url.protocol !== "https:")) {
+      url.hostname = CANONICAL_HOST;
+      url.protocol = "https:";
+      url.port = "";
+      return Response.redirect(url.toString(), 301);
+    }
     if (url.pathname === "/api/enquiry") return handleEnquiry(request, env);
     if (url.pathname.startsWith("/api/")) return json({ error: "Not found" }, 404);
+    if (LEGACY_PAGES.has(url.pathname)) return Response.redirect(`${url.origin}${url.pathname.slice(0, -5)}${url.search}`, 301);
     return env.ASSETS.fetch(request);
   },
 } satisfies ExportedHandler<Env>;

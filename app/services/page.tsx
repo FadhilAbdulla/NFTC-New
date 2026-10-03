@@ -1,16 +1,48 @@
 import { Cta } from "@/components/Cta";
 import { Glyph } from "@/components/Icon";
+import { JsonLd } from "@/components/JsonLd";
 import { PageHero } from "@/components/PageHero";
 import { Picture, SIZES } from "@/components/Picture";
 import { pageMetadata } from "@/lib/seo";
+import { absoluteUrl, site } from "@/lib/site";
 
 export const metadata = pageMetadata("/services");
+
+const services = [
+  { id: "transport", name: "Transport & mobility", description: "Passenger and institutional transport, rural and last-mile connectivity, government and PSU transport contracts, fleet aggregation and EV transition." },
+  { id: "tourism", name: "Tourism & destinations", description: "Community, rural, agri- and pilgrimage tourism, destination management, tour operations and ground handling." },
+  { id: "logistics", name: "Logistics", description: "First-mile collection, warehousing, cold-chain and agricultural logistics, goods transport and last-mile delivery networks." },
+  { id: "hospitality", name: "Hospitality", description: "Hotels, resorts, homestays and eco-lodges, feasibility studies, operator tie-ups and workforce training." },
+  { id: "trade", name: "Trade & agri-trade", description: "Producer aggregation, institutional market linkages, procurement support and market access for agri-products and handicrafts." },
+  { id: "sez", name: "SEZ & industrial-park services", description: "EV fleets, warehousing, facility management, catering, housekeeping, security and staff housing in SEZs and industrial parks." },
+  { id: "horizontal", name: "Horizontal services", description: "Digital platforms, data governance, governance audits, compliance, facility services, training and SOPs." },
+];
+
+const servicesJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "NFTCI service domains",
+  itemListElement: services.map((service, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    item: {
+      "@type": "Service",
+      "@id": absoluteUrl(`/services#${service.id}`),
+      name: service.name,
+      description: service.description,
+      url: absoluteUrl(`/services#${service.id}`),
+      provider: { "@id": `${site.url}/#organization` },
+      areaServed: { "@type": "Country", name: "India" },
+    },
+  })),
+};
 
 const darkCard = { background: "rgba(255,255,255,.07)", borderColor: "rgba(255,255,255,.14)" };
 
 export default function ServicesPage() {
   return (
     <>
+      <JsonLd data={servicesJsonLd} />
       <PageHero trail={[{ name: "Services", path: "/services" }]} title="An integrated service ecosystem, built around member capability.">
         <p>NFTCI connects complementary sectors so members can deliver complete programmes, not isolated parts.</p>
       </PageHero>

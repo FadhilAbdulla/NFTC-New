@@ -1,5 +1,5 @@
 {
-  // Cloudflare Worker: serves the static export in out/ and handles POST /api/enquiry.
+  // Cloudflare Worker: canonical-host redirects, serves the static export in out/, and handles POST /api/enquiry.
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "nftc-new",
   "main": "worker/index.ts",
@@ -10,11 +10,15 @@
   "assets": {
     "directory": "./out",
     "binding": "ASSETS",
-    // /about serves about.html; /about.html and /about/ redirect to /about
+    // /about serves about.html; /about/ redirects to /about (old .html URLs: worker/index.ts and public/_redirects)
     "html_handling": "drop-trailing-slash",
     "not_found_handling": "404-page",
-    "run_worker_first": ["/api/*"]
+    // The Worker sees every request so it can send http:// and www. to https://nftcindia.in first.
+    "run_worker_first": true
   },
+  // Serve only on the custom domains (nftcindia.in, www.nftcindia.in), not on *.workers.dev.
+  "workers_dev": false,
+  "preview_urls": false,
   // 5 form submissions per minute per IP
   "ratelimits": [{ "name": "ENQUIRY_LIMITER", "namespace_id": "1001", "simple": { "limit": 5, "period": 60 } }],
   "vars": {
