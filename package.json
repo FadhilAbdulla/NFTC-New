@@ -1,10 +1,30 @@
 {
-  "name": "nftci-revamp",
-  "version": "2.0.0",
+  "name": "nftc-india",
+  "version": "3.0.0",
   "private": true,
-  "description": "Responsive website for the National Federation of Tourism & Transport Co-operatives of India Ltd",
+  "description": "Website for the National Federation of Tourism & Transport Co-operatives of India Ltd",
   "scripts": {
-    "serve": "python3 -m http.server 8080",
-    "check": "node --check assets/js/site.js"
+    "dev": "next dev",
+    "build": "next build && node scripts/postbuild.mjs",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p worker",
+    "images": "python3 scripts/optimize-images.py",
+    "preview": "npm run build && wrangler dev",
+    "deploy": "npm run build && wrangler deploy"
+  },
+  "dependencies": {
+    "gray-matter": "^4.0.3",
+    "next": "^16.3.8",
+    "next-mdx-remote": "^6.0.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "remark-gfm": "^4.0.1"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20261003.1",
+    "@types/node": "^26.6.4",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "typescript": "^7.0.2",
+    "wrangler": "^4.147.0"
   }
 }
