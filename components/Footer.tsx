@@ -54,7 +54,7 @@ export function Footer({ nav }: { nav: NavItem[] }) {
             © {new Date().getFullYear()} {site.legalName}.
           </p>
           <p>
-            <Link href="/privacy">Privacy notice</Link> · <a href={site.bylawsPdf}>By-laws (PDF)</a>
+            <Link href="/privacy">Privacy notice</Link> · <a href={site.bylawsPdf}>By-laws (PDF)</a> · Created by Najaf
           </p>
         </div>
       </div>
