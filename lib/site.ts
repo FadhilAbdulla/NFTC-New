@@ -11,6 +11,8 @@ export const site = {
   locale: "en_IN",
   ogImage: { url: "/images/og-cover.jpg", width: 1200, height: 630, alt: "NFTCI — cooperative tourism and transport across India" },
   bylawsPdf: "/docs/nftci-bylaws.pdf",
+  // Google Analytics 4 measurement ID (loaded in app/layout.tsx). Remove to disable analytics.
+  gaMeasurementId: "G-M9HYFW5WX4",
   address: {
     lines: ["NCUI Printing Press & Skill Development Centre", "2nd Floor, B-81, Sector 80", "Noida, Uttar Pradesh, NCR of Delhi"],
     streetAddress: "NCUI Printing Press & Skill Development Centre, 2nd Floor, B-81, Sector 80",

@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { DM_Sans, Manrope } from "next/font/google";
+import Script from "next/script";
 import { Footer } from "@/components/Footer";
 import { Header, type NavItem } from "@/components/Header";
 import { JsonLd } from "@/components/JsonLd";
@@ -43,6 +44,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <RevealObserver />
         <JsonLd data={organizationJsonLd} />
         <JsonLd data={websiteJsonLd} />
+        {/* Google Analytics 4. Loads after the page is interactive so it doesn't slow first paint.
+            Client-side navigations are counted by GA4's enhanced measurement (browser history events). */}
+        <Script src={`https://www.googletagmanager.com/gtag/js?id=${site.gaMeasurementId}`} strategy="afterInteractive" />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '${site.gaMeasurementId}');`}
+        </Script>
       </body>
     </html>
   );
