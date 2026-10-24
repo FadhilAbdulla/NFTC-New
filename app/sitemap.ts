@@ -3,6 +3,7 @@ import { execFileSync } from "node:child_process";
 import fs from "node:fs";
 import { images, type ImageName } from "@/lib/images.generated";
 import { getAllPosts } from "@/lib/news";
+import { getAllTravelGuides } from "@/lib/travel";
 import { absoluteUrl, pages, site, type PagePath } from "@/lib/site";
 
 export const dynamic = "force-static";
@@ -29,10 +30,12 @@ function pageImages(file: string): string[] {
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const posts = getAllPosts();
+  const travelGuides = getAllTravelGuides();
   const paths = (Object.keys(pages) as PagePath[]).filter((path) => path !== "/news" || posts.length > 0);
   return [
     ...paths.map((path) => ({ url: absoluteUrl(path), lastModified: lastModified(routeFile(path)), priority: pages[path].priority, images: pageImages(routeFile(path)) })),
     ...posts.map((post) => ({ url: absoluteUrl(`/news/${post.slug}`), lastModified: new Date(post.updated ?? post.date), priority: 0.6, images: post.image ? [absoluteUrl(post.image)] : undefined })),
+    ...travelGuides.map((guide) => ({ url: absoluteUrl(`/travel/${guide.slug}`), lastModified: new Date(guide.updated ?? guide.date), priority: 0.7, images: [absoluteUrl(guide.image)] })),
     { url: absoluteUrl(site.bylawsPdf), lastModified: lastModified(`public${site.bylawsPdf}`), priority: 0.5 },
   ];
 }

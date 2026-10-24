@@ -34,11 +34,11 @@ export default function HomePage() {
             <h1>Local enterprise. National opportunity.</h1>
             <p className="hero-lead">The National Federation of Tourism &amp; Transport Co-operatives of India brings tourism, transport, hospitality, logistics and service cooperatives onto one structured platform, so local capability can deliver at scale.</p>
             <div className="button-row">
-              <Link className="btn btn-primary" href="/membership">
-                Explore membership <Icon name="arrow" />
+              <Link className="btn btn-primary" href="/travel">
+                Explore India journeys <Icon name="arrow" />
               </Link>
-              <Link className="btn btn-ghost" href="/services">
-                View our mandate
+              <Link className="btn btn-ghost" href="/membership">
+                Join the network
               </Link>
             </div>
           </div>
@@ -197,6 +197,22 @@ export default function HomePage() {
                 <p>Mobility, hospitality and ground support designed around safe, inclusive visitor movement.</p>
               </div>
             </Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="section surface-sand">
+        <div className="container travel-home-band">
+          <div className="travel-home-band__copy reveal">
+            <span className="eyebrow">New travel resource centre</span>
+            <h2 className="section-heading">Twenty ways to experience India with more meaning.</h2>
+            <p className="lead">From meditation beside the Ganga to Buddhist heritage, temple towns, rural homestays and slow wellness journeys—start with an itinerary, then ask NFTCI to shape it for your group.</p>
+            <Link className="btn btn-primary" href="/travel">Browse all travel guides <Icon name="arrow" /></Link>
+          </div>
+          <div className="travel-home-band__routes reveal" aria-label="Featured travel guides">
+            <Link href="/travel/rishikesh-haridwar-meditation-journey"><span>Wellness · 5 days</span><strong>Rishikesh &amp; Haridwar meditation journey</strong><Icon name="arrow" /></Link>
+            <Link href="/travel/buddhist-circuit-bodh-gaya-varanasi-kushinagar"><span>Buddhist heritage · 8 days</span><strong>India’s Buddhist heartland</strong><Icon name="arrow" /></Link>
+            <Link href="/travel/odisha-sacred-coast-puri-konark-bhubaneswar"><span>Pilgrimage · 5 days</span><strong>Odisha’s sacred coast</strong><Icon name="arrow" /></Link>
           </div>
         </div>
       </section>

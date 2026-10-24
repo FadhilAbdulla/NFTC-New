@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   applicationName: site.shortName,
   authors: [{ name: site.legalName }],
   formatDetection: { telephone: false },
-  alternates: { types: { "application/rss+xml": [{ url: "/news/feed.xml", title: `${site.shortName} news` }] } },
+  alternates: { types: { "application/rss+xml": [{ url: "/travel/feed.xml", title: `${site.shortName} travel guides` }, { url: "/news/feed.xml", title: `${site.shortName} news` }] } },
 };
 
 export const viewport: Viewport = { themeColor: "#071a2f", width: "device-width", initialScale: 1, viewportFit: "cover" };

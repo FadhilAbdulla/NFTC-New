@@ -13,6 +13,7 @@ const isActive = (pathname: string, href: string) => (href === "/" ? pathname ==
 
 export function Header({ nav }: { nav: NavItem[] }) {
   const pathname = usePathname();
+  const travelSection = pathname === "/travel" || pathname.startsWith("/travel/");
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const toggleRef = useRef<HTMLButtonElement>(null);
@@ -71,9 +72,15 @@ export function Header({ nav }: { nav: NavItem[] }) {
             ))}
           </nav>
           <div className="header-actions">
-            <Link className="btn btn-primary" href="/membership">
-              Join NFTCI <Icon name="arrow" size={17} />
-            </Link>
+            {travelSection ? (
+              <a className="btn btn-primary" href={`mailto:${site.email}?subject=${encodeURIComponent("Travel planning enquiry")}`}>
+                Plan a journey <Icon name="mail" size={17} />
+              </a>
+            ) : (
+              <Link className="btn btn-primary" href="/membership">
+                Join NFTCI <Icon name="arrow" size={17} />
+              </Link>
+            )}
             <button ref={toggleRef} className="menu-toggle" type="button" aria-label="Open menu" aria-expanded={open} aria-controls="mobileDrawer" onClick={() => setOpen(true)}>
               <span className="menu-toggle__label">Menu</span>
               <span className="menu-toggle__icon" aria-hidden="true">
@@ -107,9 +114,15 @@ export function Header({ nav }: { nav: NavItem[] }) {
               </Link>
             ))}
           </nav>
-          <Link className="btn btn-primary drawer-cta" href="/membership" onClick={() => setOpen(false)}>
-            Become a member <Icon name="arrow" size={17} />
-          </Link>
+          {travelSection ? (
+            <a className="btn btn-primary drawer-cta" href={`mailto:${site.email}?subject=${encodeURIComponent("Travel planning enquiry")}`} onClick={() => setOpen(false)}>
+              Plan a journey <Icon name="mail" size={17} />
+            </a>
+          ) : (
+            <Link className="btn btn-primary drawer-cta" href="/membership" onClick={() => setOpen(false)}>
+              Become a member <Icon name="arrow" size={17} />
+            </Link>
+          )}
           <div className="drawer-contact">
             <span className="drawer-contact__label">Need assistance?</span>
             <a href={`mailto:${site.email}`}>{site.email}</a>

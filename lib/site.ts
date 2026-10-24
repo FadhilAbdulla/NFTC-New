@@ -24,7 +24,7 @@ export const site = {
   },
 } as const;
 
-export type PagePath = "/" | "/about" | "/services" | "/programmes" | "/gallery" | "/membership" | "/news" | "/contact" | "/privacy";
+export type PagePath = "/" | "/about" | "/services" | "/programmes" | "/travel" | "/gallery" | "/membership" | "/news" | "/contact" | "/privacy";
 
 type PageSeo = { title: string; description: string; label: string; priority: number };
 
@@ -52,6 +52,12 @@ export const pages: Record<PagePath, PageSeo> = {
     title: "Programme Areas — Member-Led Delivery",
     description: "Programme areas NFTCI develops with member cooperatives and partners: green mobility, pilgrimage and event mobility, agri-logistics and community tourism.",
     priority: 0.7,
+  },
+  "/travel": {
+    label: "Travel guides",
+    title: "India Travel Itineraries — Pilgrimage, Wellness & Heritage",
+    description: "Explore 20 thoughtful India itineraries for pilgrimage, meditation, heritage, wellness and community tourism, with official planning resources.",
+    priority: 0.9,
   },
   "/gallery": {
     label: "Gallery",
@@ -86,7 +92,7 @@ export const pages: Record<PagePath, PageSeo> = {
 };
 
 // "News" is added automatically once the first post is published (see lib/news.ts).
-export const primaryNav: PagePath[] = ["/", "/about", "/services", "/programmes", "/gallery", "/membership", "/contact"];
+export const primaryNav: PagePath[] = ["/", "/about", "/services", "/programmes", "/travel", "/membership", "/contact"];
 
 export const serviceLinks = [
   { label: "Transport & mobility", href: "/services#transport" },

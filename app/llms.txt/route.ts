@@ -1,4 +1,5 @@
 import { getAllPosts } from "@/lib/news";
+import { getAllTravelGuides } from "@/lib/travel";
 import { absoluteUrl, pages, site, type PagePath } from "@/lib/site";
 
 export const dynamic = "force-static";
@@ -10,6 +11,7 @@ const link = (path: PagePath) => `- [${pages[path].label}](${absoluteUrl(path)})
 
 export function GET() {
   const posts = getAllPosts();
+  const guides = getAllTravelGuides();
   const body = `# ${site.legalName} (${site.name})
 
 > ${site.legalName} — also known as ${site.name} or ${site.shortName} — is a national-level apex cooperative federation (a "cooperative of cooperatives") that connects tourism, transport, hospitality, logistics, trade and service cooperatives, SHGs, MSMEs and rural enterprises across all States and Union Territories of India.
@@ -31,7 +33,12 @@ export function GET() {
 
 ## Pages
 
-${(["/", "/about", "/services", "/programmes", "/membership", "/contact"] as PagePath[]).map(link).join("\n")}
+${(["/", "/about", "/services", "/programmes", "/travel", "/membership", "/contact"] as PagePath[]).map(link).join("\n")}
+## Travel guides
+
+The guides below are NFTCI editorial planning concepts, not confirmed government tour packages. Readers should verify current rules and bookable government-operated products with the relevant official authority.
+
+${guides.map((guide) => `- [${guide.title}](${absoluteUrl(`/travel/${guide.slug}`)}): ${guide.description}`).join("\n")}
 ${posts.length ? `\n## News\n\n${posts.map((post) => `- [${post.title}](${absoluteUrl(`/news/${post.slug}`)}): ${post.description}`).join("\n")}\n` : ""}
 ## Optional
 
