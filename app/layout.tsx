@@ -30,6 +30,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const internal: NavItem[] = navPaths.map((path) => ({ label: pages[path].label, href: path }));
   // BarathGo sits just before Contact and links out to its own site.
   const nav: NavItem[] = [...internal.slice(0, -1), { label: barathGo.name, href: barathGo.url, external: true }, internal[internal.length - 1]];
+  // Membership is reached from the header's "Join NFTCI" button, so the top bar leaves it out; the footer keeps it.
+  const headerNav = nav.filter((item) => item.href !== "/membership");
   return (
     <html lang="en-IN" className={`${body.variable} ${display.variable}`}>
       <head>
@@ -40,7 +42,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <a className="skip-link" href="#main">
           Skip to content
         </a>
-        <Header nav={nav} />
+        <Header nav={headerNav} />
         <main id="main">{children}</main>
         <Footer nav={nav} />
         <RevealObserver />

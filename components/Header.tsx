@@ -33,7 +33,7 @@ export function Header({ nav }: { nav: NavItem[] }) {
     document.body.classList.add("menu-open");
     closeRef.current?.focus();
     const onKey = (event: KeyboardEvent) => event.key === "Escape" && setOpen(false);
-    const onResize = () => window.innerWidth > 1080 && setOpen(false);
+    const onResize = () => window.innerWidth > 1160 && setOpen(false);
     document.addEventListener("keydown", onKey);
     window.addEventListener("resize", onResize);
     return () => {
