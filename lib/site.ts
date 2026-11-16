@@ -92,6 +92,9 @@ export const pages: Record<PagePath, PageSeo> = {
 };
 
 // "News" is added automatically once the first post is published (see lib/news.ts).
+// Partner platform launched under NFTCI. Shown in the navigation (opens in a new tab) and as a homepage banner.
+export const barathGo = { name: "BarathGo", url: "https://barathgo.com" } as const;
+
 export const primaryNav: PagePath[] = ["/", "/about", "/services", "/programmes", "/travel", "/membership", "/contact"];
 
 export const serviceLinks = [

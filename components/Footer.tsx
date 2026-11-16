@@ -18,7 +18,13 @@ export function Footer({ nav }: { nav: NavItem[] }) {
             <ul className="footer-links">
               {nav.map((item) => (
                 <li key={item.href}>
-                  <Link href={item.href}>{item.label}</Link>
+                  {item.external ? (
+                    <a href={item.href} target="_blank" rel="noopener">
+                      {item.label} <span aria-hidden="true">↗</span>
+                    </a>
+                  ) : (
+                    <Link href={item.href}>{item.label}</Link>
+                  )}
                 </li>
               ))}
             </ul>

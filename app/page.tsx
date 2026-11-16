@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { BarathGoBanner } from "@/components/BarathGoBanner";
 import { Cta } from "@/components/Cta";
 import { Glyph, Icon } from "@/components/Icon";
 import { Picture, SIZES } from "@/components/Picture";
@@ -61,6 +62,8 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      <BarathGoBanner />
 
       <section className="section">
         <div className="container grid-2">

@@ -7,7 +7,9 @@ import { site } from "@/lib/site";
 import { Brand } from "./Brand";
 import { Icon } from "./Icon";
 
-export type NavItem = { label: string; href: string };
+export type NavItem = { label: string; href: string; external?: boolean };
+
+const newTab = { target: "_blank", rel: "noopener" } as const;
 
 const isActive = (pathname: string, href: string) => (href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(href + "/"));
 
@@ -65,11 +67,19 @@ export function Header({ nav }: { nav: NavItem[] }) {
             <Brand />
           </Link>
           <nav className="desktop-nav" aria-label="Primary navigation">
-            {nav.map((item) => (
-              <Link key={item.href} className={`nav-link${isActive(pathname, item.href) ? " is-active" : ""}`} href={item.href} aria-current={isActive(pathname, item.href) ? "page" : undefined}>
-                {item.label}
-              </Link>
-            ))}
+            {nav.map((item) =>
+              item.external ? (
+                <a key={item.href} className="nav-link nav-link--external" href={item.href} {...newTab}>
+                  {item.label}
+                  <span className="nav-link__ext" aria-hidden="true">↗</span>
+                  <span className="sr-only"> (opens in a new tab)</span>
+                </a>
+              ) : (
+                <Link key={item.href} className={`nav-link${isActive(pathname, item.href) ? " is-active" : ""}`} href={item.href} aria-current={isActive(pathname, item.href) ? "page" : undefined}>
+                  {item.label}
+                </Link>
+              ),
+            )}
           </nav>
           <div className="header-actions">
             {travelSection ? (
@@ -102,17 +112,26 @@ export function Header({ nav }: { nav: NavItem[] }) {
           </div>
           <p className="drawer-kicker">Explore NFTCI</p>
           <nav className="drawer-nav" aria-label="Mobile navigation">
-            {nav.map((item, index) => (
-              <Link key={item.href} className={`drawer-link${isActive(pathname, item.href) ? " is-active" : ""}`} href={item.href} aria-current={isActive(pathname, item.href) ? "page" : undefined} onClick={() => setOpen(false)}>
-                <span className="drawer-link__main">
-                  <span className="drawer-link__index">{String(index + 1).padStart(2, "0")}</span>
-                  <span className="drawer-link__label">{item.label}</span>
-                </span>
-                <span className="drawer-link__arrow">
-                  <Icon name="arrow" size={16} />
-                </span>
-              </Link>
-            ))}
+            {nav.map((item, index) => {
+              const content = (
+                <>
+                  <span className="drawer-link__main">
+                    <span className="drawer-link__index">{String(index + 1).padStart(2, "0")}</span>
+                    <span className="drawer-link__label">{item.label}</span>
+                  </span>
+                  <span className="drawer-link__arrow">{item.external ? <span aria-hidden="true">↗</span> : <Icon name="arrow" size={16} />}</span>
+                </>
+              );
+              return item.external ? (
+                <a key={item.href} className="drawer-link" href={item.href} {...newTab} aria-label={`${item.label} (opens in a new tab)`} onClick={() => setOpen(false)}>
+                  {content}
+                </a>
+              ) : (
+                <Link key={item.href} className={`drawer-link${isActive(pathname, item.href) ? " is-active" : ""}`} href={item.href} aria-current={isActive(pathname, item.href) ? "page" : undefined} onClick={() => setOpen(false)}>
+                  {content}
+                </Link>
+              );
+            })}
           </nav>
           {travelSection ? (
             <a className="btn btn-primary drawer-cta" href={`mailto:${site.email}?subject=${encodeURIComponent("Travel planning enquiry")}`} onClick={() => setOpen(false)}>

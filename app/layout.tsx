@@ -7,7 +7,7 @@ import { JsonLd } from "@/components/JsonLd";
 import { RevealObserver } from "@/components/RevealObserver";
 import { hasNews } from "@/lib/news";
 import { organizationJsonLd, websiteJsonLd } from "@/lib/seo";
-import { pages, primaryNav, site } from "@/lib/site";
+import { barathGo, pages, primaryNav, site } from "@/lib/site";
 import "./globals.css";
 
 const body = DM_Sans({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: "--font-body", display: "swap" });
@@ -27,7 +27,9 @@ export const viewport: Viewport = { themeColor: "#071a2f", width: "device-width"
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const navPaths = hasNews() ? [...primaryNav.slice(0, -1), "/news" as const, primaryNav[primaryNav.length - 1]] : primaryNav;
-  const nav: NavItem[] = navPaths.map((path) => ({ label: pages[path].label, href: path }));
+  const internal: NavItem[] = navPaths.map((path) => ({ label: pages[path].label, href: path }));
+  // BarathGo sits just before Contact and links out to its own site.
+  const nav: NavItem[] = [...internal.slice(0, -1), { label: barathGo.name, href: barathGo.url, external: true }, internal[internal.length - 1]];
   return (
     <html lang="en-IN" className={`${body.variable} ${display.variable}`}>
       <head>
